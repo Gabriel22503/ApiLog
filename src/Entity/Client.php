@@ -6,6 +6,7 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client
@@ -13,21 +14,27 @@ class Client
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getLogs", "getCLient"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getLogs", "getCLient"])]
     private ?string $ip = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getLogs", "getCLient"])]
     private ?string $guid = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getLogs", "getCLient"])]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Groups(["getLogs", "getCLient"])]
     private ?bool $status = null;
 
     #[ORM\OneToMany(mappedBy: "client", targetEntity: Log::Class)]
+    #[Groups(["getCLient"])]
     private Collection $logs;
 
     public function getId(): ?int

@@ -6,6 +6,8 @@ use App\Repository\LogRepository;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 date_default_timezone_set('Europe/Paris');
 
 #[ORM\Entity(repositoryClass: LogRepository::class)]
@@ -15,16 +17,20 @@ class Log
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getLogs", "getClient"])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(["getLogs", "getClient"])]
     private ?string $message = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(["getLogs", "getClient"])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\ManyToOne(targetEntity: Client::Class, inversedBy: 'logs')]
     #[ORM\JoinColumn(name: "client_id", referencedColumnName: "id")]
+    #[Groups(["getLogs","getClient"])]
     private Client|null $client = null;
 
     /**
